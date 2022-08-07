@@ -1,0 +1,6 @@
+.. |BREUGEM2012|   replace:: Breugem, *J. Comput. Phys.* (**231**), 2012
+.. |UHLMANN2005|   replace:: Uhlmann, *J. Comput. Phys.* (**209**), 2005
+.. |COSTA2015|     replace:: Costa et al., *Phys. Rev. E* (**92**), 2015
+.. |KAJISHIMA2002| replace:: Kajishima and Takiguchi, *Int. J. of Heat Fluid Flow* (**23-5**), 2002
+.. |PAN2002|       replace:: Pan and Glowinski, *J. Comput. Phys.* (**181**), 2002
+.. |TSUJI1993|     replace:: Tsuji, *KONA Powder and Particle J.* (**11**), 1993
