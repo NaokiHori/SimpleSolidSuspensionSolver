@@ -41,10 +41,13 @@ static int increment_particle_positions(const param_t *param, const int rkstep, 
     particle_t *p = suspensions->particles[n];
     double ux0 = p->ux;
     double uy0 = p->uy;
+    double vz0 = p->vz;
     double ux1 = p->ux+p->dux;
     double uy1 = p->uy+p->duy;
-    p->dx = 0.5*gamma*dt*(ux0+ux1);
-    p->dy = 0.5*gamma*dt*(uy0+uy1);
+    double vz1 = p->vz+p->dvz;
+    p->dx  = 0.5*gamma*dt*(ux0+ux1);
+    p->dy  = 0.5*gamma*dt*(uy0+uy1);
+    p->daz = 0.5*gamma*dt*(vz0+vz1);
   }
   return 0;
 }

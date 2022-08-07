@@ -34,7 +34,7 @@ static int compute_inertia(const param_t *param, const parallel_t *parallel, con
     const double px   = p->x+p->dx;
     const double py   = p->y+p->dy;
     const double pm   = suspensions_compute_mass(pden, pr);
-    const double pim  = suspensions_compute_momentum_of_inertia(pden, pr);
+    const double pim  = suspensions_compute_moment_of_inertia(pden, pr);
     // buffers (for simplicity)
     double iux = 0.;
     double iuy = 0.;

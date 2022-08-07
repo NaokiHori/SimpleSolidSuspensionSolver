@@ -20,12 +20,15 @@ static int update_particle_positions(const param_t *param, suspensions_t *suspen
   const int n_particles = suspensions->n_particles;
   for(int n = 0; n < n_particles; n++){
     particle_t *p = suspensions->particles[n];
-    p->x += p->dx;
-    p->y += p->dy;
+    p->x  += p->dx;
+    p->y  += p->dy;
+    p->az += p->daz;
     // correct periodicity
     const double ly = param->ly;
     if(p->y < 0.) p->y += ly;
     if(p->y > ly) p->y -= ly;
+    if(p->az <      0.) p->az += 2.*M_PI;
+    if(p->az > 2.*M_PI) p->az -= 2.*M_PI;
   }
   return 0;
 }

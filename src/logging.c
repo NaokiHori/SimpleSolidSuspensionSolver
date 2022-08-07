@@ -182,12 +182,11 @@ static int check_particle(const char fname[], const param_t *param, const parall
     }
     if(fp != NULL){
       int ndigits = get_ngidits(param->log.rate);
-      fprintf(fp, "%*.*f % .7e % .7e % .7e % .7e % .7e % .7e % .7e\n",
+      fprintf(fp, "%*.*f % .7e % .7e % .7e % .7e % .7e % .7e\n",
           ndigits+3, ndigits,
           param->time,
-          p->x, p->y,
-          p->ux, p->uy, p->vz,
-          0.5*(p->cfx[0]+p->cfx[1]), 0.5*(p->cfy[0]+p->cfy[1])
+          p->x, p->y, p->az,
+          p->ux, p->uy, p->vz
       );
       fileio_fclose(fp);
     }

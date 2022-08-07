@@ -45,7 +45,7 @@ double suspensions_compute_mass(const double den, const double r){
   return den*vol;
 }
 
-double suspensions_compute_momentum_of_inertia(const double den, const double r){
+double suspensions_compute_moment_of_inertia(const double den, const double r){
   double mass = suspensions_compute_mass(den, r);
   return 0.5*mass*POW2(r);
 }

@@ -57,15 +57,16 @@ static int check_stats(double *mindist, double *vfrac, const double lx, const do
   return 0;
 }
 
-static int output(const int n_particles, const double *dens, const double *rs, const double *xs, const double *ys, const double *uxs, const double *uys, const double *vzs){
+static int output(const int n_particles, const double *dens, const double *rs, const double *xs, const double *ys, const double *azs, const double *uxs, const double *uys, const double *vzs){
   fileio_w_0d_serial("..", "n_particles",   NPYIO_INT,    sizeof(int),    &n_particles);
   fileio_w_1d_serial("..", "particle_dens", NPYIO_DOUBLE, sizeof(double), n_particles, dens);
-  fileio_w_1d_serial("..", "particle_rs",   NPYIO_DOUBLE, sizeof(double), n_particles, rs  );
-  fileio_w_1d_serial("..", "particle_xs",   NPYIO_DOUBLE, sizeof(double), n_particles, xs  );
-  fileio_w_1d_serial("..", "particle_ys",   NPYIO_DOUBLE, sizeof(double), n_particles, ys  );
-  fileio_w_1d_serial("..", "particle_uxs",  NPYIO_DOUBLE, sizeof(double), n_particles, uxs );
-  fileio_w_1d_serial("..", "particle_uys",  NPYIO_DOUBLE, sizeof(double), n_particles, uys );
-  fileio_w_1d_serial("..", "particle_vzs",  NPYIO_DOUBLE, sizeof(double), n_particles, vzs );
+  fileio_w_1d_serial("..", "particle_rs",   NPYIO_DOUBLE, sizeof(double), n_particles,   rs);
+  fileio_w_1d_serial("..", "particle_xs",   NPYIO_DOUBLE, sizeof(double), n_particles,   xs);
+  fileio_w_1d_serial("..", "particle_ys",   NPYIO_DOUBLE, sizeof(double), n_particles,   ys);
+  fileio_w_1d_serial("..", "particle_azs",  NPYIO_DOUBLE, sizeof(double), n_particles,  azs);
+  fileio_w_1d_serial("..", "particle_uxs",  NPYIO_DOUBLE, sizeof(double), n_particles,  uxs);
+  fileio_w_1d_serial("..", "particle_uys",  NPYIO_DOUBLE, sizeof(double), n_particles,  uys);
+  fileio_w_1d_serial("..", "particle_vzs",  NPYIO_DOUBLE, sizeof(double), n_particles,  vzs);
   return 0;
 }
 
@@ -78,6 +79,7 @@ int main(void){
   double *rs   = common_calloc(n_particles, sizeof(double));
   double *xs   = common_calloc(n_particles, sizeof(double));
   double *ys   = common_calloc(n_particles, sizeof(double));
+  double *azs  = common_calloc(n_particles, sizeof(double));
   double *uxs  = common_calloc(n_particles, sizeof(double));
   double *uys  = common_calloc(n_particles, sizeof(double));
   double *vzs  = common_calloc(n_particles, sizeof(double));
@@ -126,20 +128,23 @@ regen:
     printf("minimum distance (should be positive): % .1e\n", mindist);
     printf("volume fraction                      : % .1e\n", vfrac);
   }
+  // z angles, 0 for now
+  memset(azs, 0, sizeof(double)*n_particles);
   // velocities, still
   memset(uxs, 0, sizeof(double)*n_particles);
   memset(uys, 0, sizeof(double)*n_particles);
   memset(vzs, 0, sizeof(double)*n_particles);
   // output
-  output(n_particles, dens, rs, xs, ys, uxs, uys, vzs);
+  output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs);
   // clean-up buffers
   common_free(dens);
-  common_free(rs);
-  common_free(xs);
-  common_free(ys);
-  common_free(uxs);
-  common_free(uys);
-  common_free(vzs);
+  common_free(  rs);
+  common_free(  xs);
+  common_free(  ys);
+  common_free( azs);
+  common_free( uxs);
+  common_free( uys);
+  common_free( vzs);
   return 0;
 }
 

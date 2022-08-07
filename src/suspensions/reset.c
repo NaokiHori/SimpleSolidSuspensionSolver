@@ -10,8 +10,9 @@ int suspensions_reset_particle_increments(suspensions_t *suspensions){
     suspensions->particles[n]->dux = 0.;
     suspensions->particles[n]->duy = 0.;
     suspensions->particles[n]->dvz = 0.;
-    suspensions->particles[n]->dx = 0.;
-    suspensions->particles[n]->dy = 0.;
+    suspensions->particles[n]->dx  = 0.;
+    suspensions->particles[n]->dy  = 0.;
+    suspensions->particles[n]->daz = 0.;
   }
   return 0;
 }

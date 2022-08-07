@@ -13,34 +13,38 @@ def initialise(n_particles):
     xs = [0.4]
     # y locations
     ys = [0.]
+    # z angles
+    azs = [0.]
     # x velocities
     uxs = [0.]
     # y velocities
     uys = [0.]
     # z angular velocities
     vzs = [0.]
-    return dens, rs, xs, ys, uxs, uys, vzs
+    return dens, rs, xs, ys, azs, uxs, uys, vzs
 
-def output(n_particles, dens, rs, xs, ys, uxs, uys, vzs):
+def output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs):
     n_particles = np.array(n_particles, dtype="int32")
     dens = np.array(dens, dtype="float64")
     rs   = np.array(rs,   dtype="float64")
     xs   = np.array(xs,   dtype="float64")
     ys   = np.array(ys,   dtype="float64")
+    azs  = np.array(azs,  dtype="float64")
     uxs  = np.array(uxs,  dtype="float64")
     uys  = np.array(uys,  dtype="float64")
     vzs  = np.array(vzs,  dtype="float64")
     np.save("n_particles", n_particles)
     np.save("particle_dens", dens)
-    np.save("particle_rs",   rs)
-    np.save("particle_xs",   xs)
-    np.save("particle_ys",   ys)
-    np.save("particle_uxs",  uxs)
-    np.save("particle_uys",  uys)
-    np.save("particle_vzs",  vzs)
+    np.save("particle_rs",     rs)
+    np.save("particle_xs",     xs)
+    np.save("particle_ys",     ys)
+    np.save("particle_azs",   azs)
+    np.save("particle_uxs",   uxs)
+    np.save("particle_uys",   uys)
+    np.save("particle_vzs",   vzs)
 
 if __name__ == "__main__":
     n_particles = 1
-    dens, rs, xs, ys, uxs, uys, vzs = initialise(n_particles)
-    output(n_particles, dens, rs, xs, ys, uxs, uys, vzs)
+    dens, rs, xs, ys, azs, uxs, uys, vzs = initialise(n_particles)
+    output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs)
 

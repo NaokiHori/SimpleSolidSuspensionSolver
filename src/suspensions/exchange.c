@@ -40,7 +40,7 @@ static int kernel_exchange_momentum(const param_t *param, const parallel_t *para
     const double pden = p->den;
     const double pr   = p->r;
     const double pm   = suspensions_compute_mass(pden, pr);
-    const double pim  = suspensions_compute_momentum_of_inertia(pden, pr);
+    const double pim  = suspensions_compute_moment_of_inertia(pden, pr);
     const double px   = p->x;
     const double py   = p->y;
     const double pux  = p->ux;

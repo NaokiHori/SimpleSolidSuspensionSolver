@@ -25,6 +25,8 @@ This library numerically solves the motion of rigid bodies governed by the Newto
 
 Please refer to `Simple Navier-Stokes Solver <https://github.com/NaokiHori/SimpleNavierStokesSolver>`_ and `the documentation of this library <https://naokihori.github.io/SimpleSuspensionSolver/index.html>`_ for details.
 
+This library is still under development, and especially the documentation is far from sufficient.
+
 **********
 Dependency
 **********

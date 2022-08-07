@@ -54,6 +54,7 @@ static int save_particles(const char dirname[], const suspensions_t *suspensions
   double *rs   = common_calloc(n_particles, sizeof(double));
   double *xs   = common_calloc(n_particles, sizeof(double));
   double *ys   = common_calloc(n_particles, sizeof(double));
+  double *azs  = common_calloc(n_particles, sizeof(double));
   double *uxs  = common_calloc(n_particles, sizeof(double));
   double *uys  = common_calloc(n_particles, sizeof(double));
   double *vzs  = common_calloc(n_particles, sizeof(double));
@@ -63,21 +64,24 @@ static int save_particles(const char dirname[], const suspensions_t *suspensions
     rs[n]   = p->r;
     xs[n]   = p->x;
     ys[n]   = p->y;
+    azs[n]  = p->az;
     uxs[n]  = p->ux;
     uys[n]  = p->uy;
     vzs[n]  = p->vz;
   }
   fileio_w_1d_serial(dirname, "particle_dens", NPYIO_DOUBLE, sizeof(double), n_particles, dens);
-  fileio_w_1d_serial(dirname, "particle_rs",   NPYIO_DOUBLE, sizeof(double), n_particles, rs  );
-  fileio_w_1d_serial(dirname, "particle_xs",   NPYIO_DOUBLE, sizeof(double), n_particles, xs  );
-  fileio_w_1d_serial(dirname, "particle_ys",   NPYIO_DOUBLE, sizeof(double), n_particles, ys  );
-  fileio_w_1d_serial(dirname, "particle_uxs",  NPYIO_DOUBLE, sizeof(double), n_particles, uxs );
-  fileio_w_1d_serial(dirname, "particle_uys",  NPYIO_DOUBLE, sizeof(double), n_particles, uys );
-  fileio_w_1d_serial(dirname, "particle_vzs",  NPYIO_DOUBLE, sizeof(double), n_particles, vzs );
+  fileio_w_1d_serial(dirname, "particle_rs",   NPYIO_DOUBLE, sizeof(double), n_particles,   rs);
+  fileio_w_1d_serial(dirname, "particle_xs",   NPYIO_DOUBLE, sizeof(double), n_particles,   xs);
+  fileio_w_1d_serial(dirname, "particle_ys",   NPYIO_DOUBLE, sizeof(double), n_particles,   ys);
+  fileio_w_1d_serial(dirname, "particle_azs",  NPYIO_DOUBLE, sizeof(double), n_particles,  azs);
+  fileio_w_1d_serial(dirname, "particle_uxs",  NPYIO_DOUBLE, sizeof(double), n_particles,  uxs);
+  fileio_w_1d_serial(dirname, "particle_uys",  NPYIO_DOUBLE, sizeof(double), n_particles,  uys);
+  fileio_w_1d_serial(dirname, "particle_vzs",  NPYIO_DOUBLE, sizeof(double), n_particles,  vzs);
   common_free(dens);
   common_free(rs);
   common_free(xs);
   common_free(ys);
+  common_free(azs);
   common_free(uxs);
   common_free(uys);
   common_free(vzs);
