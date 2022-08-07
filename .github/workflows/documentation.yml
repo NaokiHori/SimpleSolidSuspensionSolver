@@ -1,0 +1,69 @@
+name: Documentation
+
+on:
+
+  push:
+    branches:
+      - main
+    paths:
+      - docs/**
+      - .github/workflows/documentation.yml
+
+jobs:
+
+  build-doc:
+    name: Build documentation using sphinx
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+        with:
+          repository: 'NaokiHori/SimpleSuspensionSolver'
+          ref: 'main'
+      - name: Build documentation using Sphinx
+        run: |
+          echo "cd docs && make html" > sphinx.sh
+          docker run \
+            --rm \
+            --volume ${PWD}:/project \
+            --workdir /project \
+            sphinxdoc/sphinx:5.0.1 \
+            /bin/bash sphinx.sh
+      - name: Upload artifacts
+        # upload everything under docs/build/html/
+        uses: actions/upload-artifact@v3
+        with:
+          name: DocHTML
+          path: docs/build/html
+
+  deploy-doc:
+    needs: build-doc
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v1
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: DocHTML
+          path: docs/
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: docs/
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@main
+

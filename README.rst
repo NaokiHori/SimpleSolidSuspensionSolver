@@ -2,13 +2,13 @@
 Simple Suspension Solver
 ########################
 
-|License|_ |CI|_ |LastCommit|_
+|License|_ |Documentation|_ |LastCommit|_
 
 .. |License| image:: https://img.shields.io/github/license/NaokiHori/SimpleSuspensionSolver
 .. _License: https://opensource.org/licenses/MIT
 
-.. |CI| image:: https://github.com/NaokiHori/SimpleSuspensionSolver/actions/workflows/ci.yml/badge.svg
-.. _CI: https://github.com/NaokiHori/SimpleSuspensionSolver/actions/workflows/ci.yml
+.. |Documentation| image:: https://github.com/NaokiHori/SimpleSuspensionSolver/actions/workflows/documentation.yml/badge.svg
+.. _Documentation: https://github.com/NaokiHori/SimpleSuspensionSolver/actions/workflows/documentation.yml
 
 .. |LastCommit| image:: https://img.shields.io/github/last-commit/NaokiHori/SimpleSuspensionSolver/main
 .. _LastCommit: https://github.com/NaokiHori/SimpleSuspensionSolver/commits/main
