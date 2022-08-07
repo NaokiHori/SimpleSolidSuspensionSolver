@@ -43,7 +43,8 @@ static int init_or_load(const param_t *param, suspensions_t *suspensions){
   }
   // prepare buffers
   double *dens = common_calloc(n_particles, sizeof(double));
-  double *rs   = common_calloc(n_particles, sizeof(double));
+  double *as   = common_calloc(n_particles, sizeof(double));
+  double *bs   = common_calloc(n_particles, sizeof(double));
   double *xs   = common_calloc(n_particles, sizeof(double));
   double *ys   = common_calloc(n_particles, sizeof(double));
   double *azs  = common_calloc(n_particles, sizeof(double));
@@ -51,7 +52,8 @@ static int init_or_load(const param_t *param, suspensions_t *suspensions){
   double *uys  = common_calloc(n_particles, sizeof(double));
   double *vzs  = common_calloc(n_particles, sizeof(double));
   fileio_r_1d_serial(dirname, "particle_dens", sizeof(double), n_particles, dens);
-  fileio_r_1d_serial(dirname, "particle_rs",   sizeof(double), n_particles,   rs);
+  fileio_r_1d_serial(dirname, "particle_as",   sizeof(double), n_particles,   as);
+  fileio_r_1d_serial(dirname, "particle_bs",   sizeof(double), n_particles,   bs);
   fileio_r_1d_serial(dirname, "particle_xs",   sizeof(double), n_particles,   xs);
   fileio_r_1d_serial(dirname, "particle_ys",   sizeof(double), n_particles,   ys);
   fileio_r_1d_serial(dirname, "particle_azs",  sizeof(double), n_particles,  azs);
@@ -61,7 +63,8 @@ static int init_or_load(const param_t *param, suspensions_t *suspensions){
   for(int n = 0; n < n_particles; n++){
     particle_t *p = suspensions->particles[n];
     p->den = dens[n];
-    p->r   = rs[n];
+    p->a   = as[n];
+    p->b   = bs[n];
     p->x   = xs[n];
     p->y   = ys[n];
     p->az  = azs[n];
@@ -70,7 +73,8 @@ static int init_or_load(const param_t *param, suspensions_t *suspensions){
     p->vz  = vzs[n];
   }
   common_free(dens);
-  common_free(rs);
+  common_free(as);
+  common_free(bs);
   common_free(xs);
   common_free(ys);
   common_free(azs);

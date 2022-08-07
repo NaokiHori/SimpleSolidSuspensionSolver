@@ -22,14 +22,14 @@ static double fmin3(const double val0, const double val1, const double val2){
   return retval;
 }
 
-static int check_stats(double *mindist, double *vfrac, const double lx, const double ly, const int n_particles, const double *rs, const double *xs, const double *ys){
+static int check_stats(double *mindist, double *vfrac, const double lx, const double ly, const int n_particles, const double *as, const double *bs, const double *xs, const double *ys){
   *mindist = DBL_MAX;
   for(int n0 = 0; n0 < n_particles; n0++){
-    double r0 = rs[n0];
+    double r0 = as[n0];
     double x0 = xs[n0];
     double y0 = ys[n0];
     for(int n1 = 0; n1 < n0; n1++){
-      double r1 = rs[n1];
+      double r1 = as[n1];
       double x1 = xs[n1];
       double y1 = ys[n1];
       double xvec = fabs(x0-x1);
@@ -50,17 +50,17 @@ static int check_stats(double *mindist, double *vfrac, const double lx, const do
   }
   *vfrac = 0.;
   for(int n = 0; n < n_particles; n++){
-    double r = rs[n];
-    *vfrac += M_PI*pow(r, 2.);
+    *vfrac += M_PI*as[n]*bs[n];
   }
   *vfrac /= lx*ly;
   return 0;
 }
 
-static int output(const int n_particles, const double *dens, const double *rs, const double *xs, const double *ys, const double *azs, const double *uxs, const double *uys, const double *vzs){
+static int output(const int n_particles, const double *dens, const double *as, const double *bs, const double *xs, const double *ys, const double *azs, const double *uxs, const double *uys, const double *vzs){
   fileio_w_0d_serial("..", "n_particles",   NPYIO_INT,    sizeof(int),    &n_particles);
   fileio_w_1d_serial("..", "particle_dens", NPYIO_DOUBLE, sizeof(double), n_particles, dens);
-  fileio_w_1d_serial("..", "particle_rs",   NPYIO_DOUBLE, sizeof(double), n_particles,   rs);
+  fileio_w_1d_serial("..", "particle_as",   NPYIO_DOUBLE, sizeof(double), n_particles,   as);
+  fileio_w_1d_serial("..", "particle_bs",   NPYIO_DOUBLE, sizeof(double), n_particles,   bs);
   fileio_w_1d_serial("..", "particle_xs",   NPYIO_DOUBLE, sizeof(double), n_particles,   xs);
   fileio_w_1d_serial("..", "particle_ys",   NPYIO_DOUBLE, sizeof(double), n_particles,   ys);
   fileio_w_1d_serial("..", "particle_azs",  NPYIO_DOUBLE, sizeof(double), n_particles,  azs);
@@ -71,12 +71,13 @@ static int output(const int n_particles, const double *dens, const double *rs, c
 }
 
 int main(void){
-  srand(0);
+  srand(1);
   const double lx = 1.;
-  const double ly = 1.;
-  const int n_particles = 16;
+  const double ly = 4.;
+  const int n_particles = 192;
   double *dens = common_calloc(n_particles, sizeof(double));
-  double *rs   = common_calloc(n_particles, sizeof(double));
+  double *as   = common_calloc(n_particles, sizeof(double));
+  double *bs   = common_calloc(n_particles, sizeof(double));
   double *xs   = common_calloc(n_particles, sizeof(double));
   double *ys   = common_calloc(n_particles, sizeof(double));
   double *azs  = common_calloc(n_particles, sizeof(double));
@@ -89,17 +90,18 @@ int main(void){
   }
   // radius
   for(int n = 0; n < n_particles; n++){
-    rs[n] = gen_random(0.10, 0.10);
+    as[n] = gen_random(0.04, 0.06);
+    bs[n] = as[n]*gen_random(0.50, 1.00);
   }
   // position, no overlaps
   for(int n0 = 0; n0 < n_particles; n0++){
 regen:
     {
-      double r0 = rs[n0];
-      double x0 = gen_random(rs[n0], lx-rs[n0]);
+      double r0 = as[n0];
+      double x0 = gen_random(as[n0], lx-as[n0]);
       double y0 = gen_random(0.,     ly       );
       for(int n1 = 0; n1 < n0; n1++){
-        double r1 = rs[n1];
+        double r1 = as[n1];
         double x1 = xs[n1];
         double y1 = ys[n1];
         double xvec = fabs(x0-x1);
@@ -124,21 +126,23 @@ regen:
   }
   {
     double mindist, vfrac;
-    check_stats(&mindist, &vfrac, lx, ly, n_particles, rs, xs, ys);
+    check_stats(&mindist, &vfrac, lx, ly, n_particles, as, bs, xs, ys);
     printf("minimum distance (should be positive): % .1e\n", mindist);
     printf("volume fraction                      : % .1e\n", vfrac);
   }
   // z angles, 0 for now
-  memset(azs, 0, sizeof(double)*n_particles);
+  for(int n = 0; n < n_particles; n++){
+    azs[n] = 2.*M_PI*rand()/RAND_MAX;
+  }
   // velocities, still
   memset(uxs, 0, sizeof(double)*n_particles);
   memset(uys, 0, sizeof(double)*n_particles);
   memset(vzs, 0, sizeof(double)*n_particles);
   // output
-  output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs);
+  output(n_particles, dens, as, bs, xs, ys, azs, uxs, uys, vzs);
   // clean-up buffers
   common_free(dens);
-  common_free(  rs);
+  common_free(  as);
   common_free(  xs);
   common_free(  ys);
   common_free( azs);

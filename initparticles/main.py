@@ -7,8 +7,10 @@ def initialise(n_particles):
     ## arrays to be returned
     # densities
     dens = [1.]
-    # radii
-    rs = [0.125]
+    # major axes
+    as_ = [0.15]
+    # minor axes
+    bs_ = [0.10]
     # x locations
     xs = [0.4]
     # y locations
@@ -21,12 +23,13 @@ def initialise(n_particles):
     uys = [0.]
     # z angular velocities
     vzs = [0.]
-    return dens, rs, xs, ys, azs, uxs, uys, vzs
+    return dens, as_, bs_, xs, ys, azs, uxs, uys, vzs
 
-def output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs):
+def output(n_particles, dens, as_, bs_, xs, ys, azs, uxs, uys, vzs):
     n_particles = np.array(n_particles, dtype="int32")
     dens = np.array(dens, dtype="float64")
-    rs   = np.array(rs,   dtype="float64")
+    as_  = np.array(as_,  dtype="float64")
+    bs_  = np.array(bs_,  dtype="float64")
     xs   = np.array(xs,   dtype="float64")
     ys   = np.array(ys,   dtype="float64")
     azs  = np.array(azs,  dtype="float64")
@@ -35,7 +38,8 @@ def output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs):
     vzs  = np.array(vzs,  dtype="float64")
     np.save("n_particles", n_particles)
     np.save("particle_dens", dens)
-    np.save("particle_rs",     rs)
+    np.save("particle_as",    as_)
+    np.save("particle_bs",    bs_)
     np.save("particle_xs",     xs)
     np.save("particle_ys",     ys)
     np.save("particle_azs",   azs)
@@ -45,6 +49,6 @@ def output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs):
 
 if __name__ == "__main__":
     n_particles = 1
-    dens, rs, xs, ys, azs, uxs, uys, vzs = initialise(n_particles)
-    output(n_particles, dens, rs, xs, ys, azs, uxs, uys, vzs)
+    dens, as_, bs_, xs, ys, azs, uxs, uys, vzs = initialise(n_particles)
+    output(n_particles, dens, as_, bs_, xs, ys, azs, uxs, uys, vzs)
 

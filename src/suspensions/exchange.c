@@ -38,11 +38,13 @@ static int kernel_exchange_momentum(const param_t *param, const parallel_t *para
     particle_t *p = suspensions->particles[n];
     // constant parameters
     const double pden = p->den;
-    const double pr   = p->r;
-    const double pm   = suspensions_compute_mass(pden, pr);
-    const double pim  = suspensions_compute_moment_of_inertia(pden, pr);
+    const double pa   = p->a;
+    const double pb   = p->b;
+    const double pm   = suspensions_compute_mass(pden, pa, pb);
+    const double pim  = suspensions_compute_moment_of_inertia(pden, pa, pb);
     const double px   = p->x;
     const double py   = p->y;
+    const double paz  = p->az;
     const double pux  = p->ux;
     const double puy  = p->uy;
     const double pvz  = p->vz;
@@ -53,13 +55,13 @@ static int kernel_exchange_momentum(const param_t *param, const parallel_t *para
     for(int periodic = -1; periodic <= 1; periodic++){
       double py_ = py+ly*periodic;
       int imin, imax, jmin, jmax;
-      suspensions_decide_loop_size(1, itot,  dx, pr, px,        &imin, &imax);
-      suspensions_decide_loop_size(1, jsize, dy, pr, py_-YF(1), &jmin, &jmax);
+      suspensions_decide_loop_size(1, itot,  dx, fmax(pa, pb), px,        &imin, &imax);
+      suspensions_decide_loop_size(1, jsize, dy, fmax(pa, pb), py_-YF(1), &jmin, &jmax);
       for(int j = jmin; j <= jmax; j++){
         double y = YC(j);
         for(int i = imin; i <= imax; i++){
           double x = XC(i);
-          double w = suspensions_s_weight(grid_size, pr, px, py_, x, y);
+          double w = suspensions_s_weight(grid_size, pa, pb, px, py_, paz, x, y);
           double ux_p = pux-pvz*(y-py_);
           double uy_p = puy+pvz*(x-px);
           double ux_f = 0.5*(UX(i  , j  )+UX(i+1, j  ));

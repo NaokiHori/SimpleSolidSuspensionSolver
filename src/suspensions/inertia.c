@@ -30,11 +30,13 @@ static int compute_inertia(const param_t *param, const parallel_t *parallel, con
     particle_t *p = particles[n];
     // constant parameters
     const double pden = p->den;
-    const double pr   = p->r;
+    const double pa   = p->a;
+    const double pb   = p->b;
     const double px   = p->x+p->dx;
     const double py   = p->y+p->dy;
-    const double pm   = suspensions_compute_mass(pden, pr);
-    const double pim  = suspensions_compute_moment_of_inertia(pden, pr);
+    const double paz  = p->az+p->daz;
+    const double pm   = suspensions_compute_mass(pden, pa, pb);
+    const double pim  = suspensions_compute_moment_of_inertia(pden, pa, pb);
     // buffers (for simplicity)
     double iux = 0.;
     double iuy = 0.;
@@ -43,13 +45,13 @@ static int compute_inertia(const param_t *param, const parallel_t *parallel, con
     for(int periodic = -1; periodic <= 1; periodic++){
       double py_ = py+ly*periodic;
       int imin, imax, jmin, jmax;
-      suspensions_decide_loop_size(1, itot,  dx, pr, px,        &imin, &imax);
-      suspensions_decide_loop_size(1, jsize, dy, pr, py_-YF(1), &jmin, &jmax);
+      suspensions_decide_loop_size(1, itot,  dx, fmax(pa, pb), px,        &imin, &imax);
+      suspensions_decide_loop_size(1, jsize, dy, fmax(pa, pb), py_-YF(1), &jmin, &jmax);
       for(int j = jmin; j <= jmax; j++){
         double y = YC(j);
         for(int i = imin; i <= imax; i++){
           double x = XC(i);
-          double w = suspensions_v_weight(grid_size, pr, px, py_, x, y);
+          double w = suspensions_v_weight(grid_size, pa, pb, px, py_, paz, x, y);
           double valx = w*0.5*(UX(i  , j  )+UX(i+1, j  ))*(dx*dy);
           double valy = w*0.5*(UY(i  , j  )+UY(i  , j+1))*(dx*dy);
           iux += valx/pm;

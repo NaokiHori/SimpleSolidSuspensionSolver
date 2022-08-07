@@ -6,8 +6,8 @@
 
 typedef struct particle_t_ {
   // fixed parameters
-  // density (ratio), radius
-  double den, r;
+  // density (ratio), major and minor axes
+  double den, a, b;
   // gravity center,
   // translational (x, y) and angular (az) positions
   double x, y, az;
@@ -26,7 +26,7 @@ typedef struct particle_t_ {
   // C is a pre-factor, mass or moment of inertia
   double iux[2], iuy[2], ivz[2];
   // collision force based on k (0) and k+1 (1) step particle positions and velocities
-  double cfx[2], cfy[2];
+  double cfx[2], cfy[2], ctz[2];
 } particle_t;
 
 struct suspensions_t_ {
@@ -51,11 +51,11 @@ extern int suspensions_update_particles(const param_t *param, suspensions_t *sus
 
 /* other supportive functions */
 extern int suspensions_decide_loop_size(const int lbound, const int ubound, const double grid_size, const double radius, const double grav_center, int *min, int *max);
-extern double suspensions_compute_volume(const double r);
-extern double suspensions_compute_mass(const double den, const double r);
-extern double suspensions_compute_moment_of_inertia(const double den, const double r);
+extern double suspensions_compute_volume(const double a, const double b);
+extern double suspensions_compute_mass(const double den, const double a, const double b);
+extern double suspensions_compute_moment_of_inertia(const double den, const double a, const double b);
 
-extern double suspensions_s_weight(const double grid_size, const double radius, const double px, const double py, const double x, const double y);
-extern double suspensions_v_weight(const double grid_size, const double radius, const double px, const double py, const double x, const double y);
+extern double suspensions_s_weight(const double grid_size, const double pa, const double pb, const double px, const double py, const double paz, const double x, const double y);
+extern double suspensions_v_weight(const double grid_size, const double pa, const double pb, const double px, const double py, const double paz, const double x, const double y);
 
 #endif // SUSPENSIONS_H

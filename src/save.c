@@ -51,7 +51,8 @@ static int save_particles(const char dirname[], const suspensions_t *suspensions
   // save as SOA (radii, x coordinates, y coordinates etc.) instead of AOS (particle_t **particles)
   // to reduce the number of files
   double *dens = common_calloc(n_particles, sizeof(double));
-  double *rs   = common_calloc(n_particles, sizeof(double));
+  double *as   = common_calloc(n_particles, sizeof(double));
+  double *bs   = common_calloc(n_particles, sizeof(double));
   double *xs   = common_calloc(n_particles, sizeof(double));
   double *ys   = common_calloc(n_particles, sizeof(double));
   double *azs  = common_calloc(n_particles, sizeof(double));
@@ -61,7 +62,8 @@ static int save_particles(const char dirname[], const suspensions_t *suspensions
   for(int n = 0; n < n_particles; n++){
     particle_t *p = suspensions->particles[n];
     dens[n] = p->den;
-    rs[n]   = p->r;
+    as[n]   = p->a;
+    bs[n]   = p->b;
     xs[n]   = p->x;
     ys[n]   = p->y;
     azs[n]  = p->az;
@@ -70,7 +72,8 @@ static int save_particles(const char dirname[], const suspensions_t *suspensions
     vzs[n]  = p->vz;
   }
   fileio_w_1d_serial(dirname, "particle_dens", NPYIO_DOUBLE, sizeof(double), n_particles, dens);
-  fileio_w_1d_serial(dirname, "particle_rs",   NPYIO_DOUBLE, sizeof(double), n_particles,   rs);
+  fileio_w_1d_serial(dirname, "particle_as",   NPYIO_DOUBLE, sizeof(double), n_particles,   as);
+  fileio_w_1d_serial(dirname, "particle_bs",   NPYIO_DOUBLE, sizeof(double), n_particles,   bs);
   fileio_w_1d_serial(dirname, "particle_xs",   NPYIO_DOUBLE, sizeof(double), n_particles,   xs);
   fileio_w_1d_serial(dirname, "particle_ys",   NPYIO_DOUBLE, sizeof(double), n_particles,   ys);
   fileio_w_1d_serial(dirname, "particle_azs",  NPYIO_DOUBLE, sizeof(double), n_particles,  azs);
@@ -78,7 +81,8 @@ static int save_particles(const char dirname[], const suspensions_t *suspensions
   fileio_w_1d_serial(dirname, "particle_uys",  NPYIO_DOUBLE, sizeof(double), n_particles,  uys);
   fileio_w_1d_serial(dirname, "particle_vzs",  NPYIO_DOUBLE, sizeof(double), n_particles,  vzs);
   common_free(dens);
-  common_free(rs);
+  common_free(as);
+  common_free(bs);
   common_free(xs);
   common_free(ys);
   common_free(azs);

@@ -26,6 +26,7 @@ static int increment_particle_velocities(const param_t *param, const int rkstep,
       +(p->iuy[1]-p->iuy[0])              // internal inertia
       ;
     p->dvz =
+      +0.5*gamma*dt*(p->ctz[0]+p->ctz[1]) // collision
       +          dt* p->tvz               // boundary torque
       +(p->ivz[1]-p->ivz[0])
       ;
