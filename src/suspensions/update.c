@@ -51,7 +51,7 @@ int suspensions_update_momentum_fleid(const param_t *param, const parallel_t *pa
   fluid_update_boundaries_ux(param, parallel, ux);
   for(int j = 1; j <= jsize; j++){
     for(int i = 1; i <= itot; i++){
-      UY(i, j) += 0.5*(DUY(i  , j  )+DUY(i  , j  ));
+      UY(i, j) += 0.5*(DUY(i  , j-1)+DUY(i  , j  ));
     }
   }
   fluid_update_boundaries_uy(param, parallel, uy);
