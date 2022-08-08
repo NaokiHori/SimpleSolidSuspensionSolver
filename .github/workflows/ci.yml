@@ -12,8 +12,11 @@ on:
 jobs:
 
   build-and-simulate-1:
-    name: Build and run case-1
+    name: Build and run case-1 (SegreSilberberg effect with low resolution)
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        resolution: ["032", "064", "128"]
     steps:
       - name: Install dependencies
         run: |
@@ -38,7 +41,7 @@ jobs:
           make output
       - name: Run case
         run: |
-          sh docs/source/examples/case1/config/exec.sh
+          sh docs/source/examples/case1/config/exec${{ matrix.resolution }}.sh
       - name: Post-process results and save under artifacts directory
         run: |
           mkdir artifacts
@@ -54,7 +57,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: SegreSilberberg
+          name: SegreSilberberg${{ matrix.resolution }}
           path: artifacts
 
   build-doc:
@@ -69,11 +72,21 @@ jobs:
         with:
           repository: 'NaokiHori/SimpleSuspensionSolver'
           ref: 'main'
-      - name: Download simulation results
+      - name: Download SegreSilberberg032
         uses: actions/download-artifact@v3
         with:
-          name: SegreSilberberg
-          path: docs/source/examples/case1/data/artifacts
+          name: SegreSilberberg032
+          path: docs/source/examples/case1/data/032
+      - name: Download SegreSilberberg064
+        uses: actions/download-artifact@v3
+        with:
+          name: SegreSilberberg064
+          path: docs/source/examples/case1/data/064
+      - name: Download SegreSilberberg128
+        uses: actions/download-artifact@v3
+        with:
+          name: SegreSilberberg128
+          path: docs/source/examples/case1/data/128
       - name: Create eps and tex files
         run: |
           cd docs

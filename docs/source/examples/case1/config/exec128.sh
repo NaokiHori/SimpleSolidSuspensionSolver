@@ -5,7 +5,7 @@
 
 ## durations
 # maximum duration (in free-fall time)
-export timemax=1.0e+3
+export timemax=7.5e+2
 # maximum duration (in wall time [s])
 export wtimemax=6.0e+2
 # logging rate (in free-fall time)
@@ -25,8 +25,8 @@ export stat_after=2.0e+3
 # domain lengths
 export ly=1.0e+0
 # number of grids
-export itot=32
-export jtot=32
+export itot=128
+export jtot=128
 
 ## dt safe factors, adv and dif
 export safefactor_adv=0.75
