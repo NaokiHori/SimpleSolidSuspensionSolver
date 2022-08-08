@@ -8,3 +8,4 @@ Several examples are shown in this section.
    :maxdepth: 1
 
    case1/main
+   case2/main

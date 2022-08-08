@@ -11,7 +11,7 @@ def initialise(n_particles):
     # radii
     rs = [0.125]
     # x locations
-    xs = [0.25]
+    xs = [0.4]
     # y locations
     ys = [0.]
     # z angles
