@@ -1,0 +1,148 @@
+name: CI
+
+on:
+
+  push:
+    branches:
+      - main
+    paths:
+      - docs/**
+      - .github/workflows/documentation.yml
+
+jobs:
+
+  build-and-simulate-1:
+    name: Build and run case-1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get -y install make libopenmpi-dev libfftw3-dev
+      - name: Install python and libs for pre- and post-processings
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy
+      - name: Checkout repository
+        uses: actions/checkout@v1
+        with:
+          repository: 'NaokiHori/SimpleSuspensionSolver'
+          ref: 'main'
+      - name: Initialise particles (data will be stored under initparticles directory)
+        run: |
+          python3 docs/source/examples/case1/config/initparticles.py initparticles
+      - name: Compile
+        run: |
+          make all
+      - name: Create directories
+        run: |
+          make output
+      - name: Run case
+        run: |
+          sh docs/source/examples/case1/config/exec.sh
+      - name: Post-process results and save under artifacts directory
+        run: |
+          mkdir artifacts
+          python3 \
+            docs/source/examples/case1/data/convert.py \
+            output/log/particle0000000000.dat \
+            artifacts/particle.dat
+      - name: Write metadata used in ci.rst
+        run: |
+          echo "OS   :" $(cat /etc/os-release | grep PRETTY_NAME | awk -F "=" '{print $2}') >> artifacts/ci.txt
+          echo "Date :" $(date) >> artifacts/ci.txt
+          echo "Hash :" $(git rev-parse HEAD) >> artifacts/ci.txt
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: SegreSilberberg
+          path: artifacts
+
+  build-doc:
+    name: Build documentation using sphinx
+    needs: [build-and-simulate-1]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get -y install gnuplot
+      - name: Checkout repository
+        uses: actions/checkout@v1
+        with:
+          repository: 'NaokiHori/SimpleSuspensionSolver'
+          ref: 'main'
+      - name: Download simulation results
+        uses: actions/download-artifact@v3
+        with:
+          name: SegreSilberberg
+          path: docs/source/examples/case1/data/artifacts
+      - name: Create eps and tex files
+        run: |
+          cd docs
+          cp create_figures/gnuplot.sh .
+          bash gnuplot.sh
+      - name: Convert eps to pdf
+        run: |
+          cd docs
+          cp create_figures/epstopdf.sh .
+          docker run \
+            --rm \
+            --volume ${PWD}:/project \
+            --workdir /project \
+            naokihori/texlive:gnuplot-epslatex \
+            /bin/sh epstopdf.sh
+      - name: Compile tex files
+        run: |
+          cd docs
+          cp create_figures/pdflatex.sh .
+          docker run \
+            --rm \
+            --volume ${PWD}:/project \
+            --workdir /project \
+            naokihori/texlive:gnuplot-epslatex \
+            /bin/sh pdflatex.sh
+      - name: Build documentation using Sphinx
+        run: |
+          echo "cd docs && make html" > sphinx.sh
+          docker run \
+            --rm \
+            --volume ${PWD}:/project \
+            --workdir /project \
+            sphinxdoc/sphinx:5.0.1 \
+            /bin/bash sphinx.sh
+      - name: Upload artifacts
+        # upload everything under docs/build/html/
+        uses: actions/upload-artifact@v3
+        with:
+          name: DocHTML
+          path: docs/build/html
+
+  deploy-doc:
+    needs: build-doc
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v1
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: DocHTML
+          path: docs/
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: docs/
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@main
+
