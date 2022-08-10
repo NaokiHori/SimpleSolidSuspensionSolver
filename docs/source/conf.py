@@ -77,7 +77,8 @@ mathjax_path = "https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS
 mathjax3_config = {
     "TeX": {
         "Macros": {
-            "der": ["{\\frac{\\partial #1}{\\partial #2}}", 2], # derivative
+            "der":  ["{\\frac{\\partial #1}{\\partial #2}}", 2], # partial derivative
+            "oder": ["{\\frac{d #1}{d #2}}", 2], # ordinary derivative
             "dder": ["{\\frac{\\delta #1}{\\delta #2}}", 2],    # discrete derivative
             "mst": ["{\\gamma^{#1 #2}}", 2], # mesh skewness tensor
             "gx": ["{\\xi}"],

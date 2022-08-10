@@ -13,8 +13,8 @@ Documentation
    :maxdepth: 2
 
    introduction
-   governing_equations
-   implementation
+   governing_equations/main
+   implementation/main
    examples/index
    references
 

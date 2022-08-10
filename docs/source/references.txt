@@ -5,3 +5,4 @@
 .. |PAN2002|       replace:: Pan and Glowinski, *J. Comput. Phys.* (**181**), 2002
 .. |TSUJI1993|     replace:: Tsuji, *KONA Powder and Particle J.* (**11**), 1993
 .. |FENG1994|      replace:: Feng et al., *J. Fluid Mech.* (**277**), 1994
+.. |XIAO2005|      replace:: Xiao et al., *Int. J. Numer. Method Fluid* (**48-9**), 2005

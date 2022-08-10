@@ -7,15 +7,32 @@
 #include "suspensions.h"
 
 
+/*
+ * Collision pair matrix
+ *
+ *    | 0  1    2     3 ...  N-2  N-1  <- n1
+ * ---+------------------------------
+ *  0 |    0    1     2 ...  N-3  N-2
+ *  1 |       N-1     N ... 2N-5 2N-4
+ *  2 |            2N-3 ... 3N-8 3N-7
+ * ...
+ *  ^ |
+ *  |
+ *  n0
+ */
+
 static int get_l(const int n_particles, const int n0){
+  // left-most index of the collision pair matrix for particle index "n0"
   return (2*n_particles-n0-1)*(n0  )/2  ;
 }
 
 static int get_r(const int n_particles, const int n0){
+  // right-most index of the collision pair matrix for particle index "n0"
   return (2*n_particles-n0-2)*(n0+1)/2-1;
 }
 
 static int get_particle_indices(const int n_particles, const int n, int *n0, int *n1){
+  // convert index of collision pair "n" to the corresponding particle indices "n0" and "n1"
   for(*n0 = 0; ; (*n0)++){
     if(get_l(n_particles, *n0) <= n && n <= get_r(n_particles, *n0)){
       break;
