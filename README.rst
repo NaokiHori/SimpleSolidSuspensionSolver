@@ -15,17 +15,25 @@ Simple Suspension Solver
 
 .. image:: https://github.com/NaokiHori/SimpleSuspensionSolver/blob/main/docs/source/snapshot.png
    :width: 800
-   :target: https://youtu.be/EyaXi0o0GZ0
+   :target: https://youtu.be/iuO5CxvAlio
 
 ********
 Overview
 ********
 
-This library numerically solves the motion of rigid bodies governed by the Newton-Euler equations suspended in viscous liquid by means of the finite-difference and the immersed boundary methods.
+This library numerically solves the motion of rigid bodies (ellipses) governed by the Newton-Euler equations suspended in viscous liquid by means of the finite-difference and the immersed boundary methods.
 
 Please refer to `Simple Navier-Stokes Solver <https://github.com/NaokiHori/SimpleNavierStokesSolver>`_ and `the documentation of this library <https://naokihori.github.io/SimpleSuspensionSolver/index.html>`_ for details.
 
-This library is still under development, and especially the documentation is far from sufficient.
+This library is still under development, and especially the documentation is far from being sufficient.
+
+********
+Features
+********
+
+* MPI-parallelised
+* Eulerian-based (no Lagrangian points) IBM
+* Stable collision model between ellipses
 
 **********
 Dependency

@@ -5,7 +5,7 @@
 
 ## durations
 # maximum duration (in free-fall time)
-export timemax=2.0e+2
+export timemax=1.5e+2
 # maximum duration (in wall time [s])
 export wtimemax=6.0e+2
 # logging rate (in free-fall time)

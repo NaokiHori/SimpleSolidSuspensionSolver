@@ -1,4 +1,4 @@
-## initialise particles (density, radius, positions, velocities)
+## initialise particles (density, sizes, positions, velocities)
 
 import sys
 import numpy as np
@@ -7,15 +7,15 @@ import numpy as np
 def initialise(n_particles):
     ## arrays to be returned
     # densities
-    dens = [1.]
+    dens = [1.003]
     # major axis
-    as_ = [0.125]
+    as_ = [0.10]
     # minor axis
-    bs_ = [0.125]
+    bs_ = [0.05]
     # x locations
-    xs = [0.4]
+    xs = [0.5]
     # y locations
-    ys = [0.]
+    ys = [0.5]
     # z angles
     azs = [0.]
     # x velocities

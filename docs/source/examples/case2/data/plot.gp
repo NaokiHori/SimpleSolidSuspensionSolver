@@ -6,10 +6,10 @@ set output 'result.tex'
 set xlabel '$y$'
 set ylabel '$x$'
 
-set xrange [0:30]
+set xrange [0:25]
 set yrange [0.26:0.42]
 
-set xtics 0,10,30
+set xtics 0,5,25
 set ytics 0.26,0.04,0.42
 
 set format x '$% .0f$'
@@ -21,16 +21,16 @@ set style line 3 lc rgb '#33AA00'
 set style line 4 lc rgb '#000000'
 
 array filenames[4] = [ \
-  '032/particle.dat', \
-  '064/particle.dat', \
-  '128/particle.dat', \
+  '32/particle.dat', \
+  '64/particle.dat', \
+  '96/particle.dat', \
   'PanGlowinski2002.dat', \
 ]
 
 array titles[4] = [ \
   '$32$', \
   '$64$', \
-  '$128$', \
+  '$96$', \
   'reference', \
 ]
 
