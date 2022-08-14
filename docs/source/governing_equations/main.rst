@@ -5,9 +5,9 @@
 Governing equations
 ###################
 
-****************
-Momentum balance
-****************
+*******************************************
+Translational and angular momentum balances
+*******************************************
 
 In addition to the Navier-Stokes equations
 
@@ -22,64 +22,57 @@ In addition to the Navier-Stokes equations
    +
    \frac{1}{Re} \der{}{x_j} \der{u_i}{x_j}
    +
-   f_i,
+   a_i,
 
-which govern the behaviour of the liquid, we consider the Newton-Euler equations to describe the motions of rigid particles.
-In particular, the translational motion (velocity of the gravity center) is given by
+which govern the behaviour of the liquid, we consider the Newton-Euler equations to describe the motions of rigid particles (density: :math:`\rho_p`, volume: :math:`V_p`, surface: :math:`S_p` or :math:`\partial V_p`):
 
 .. math::
 
    \rho_p V_p \oder{U_i}{t}
    =
    -
-   \int_{\partial V_p} a_i d S_p^k
+   \int_{\partial V_p} a_i d S_p
    +
    \oder{}{t} \int_{V_p} u_i d V_p
    +
-   F_i.
-
-Taking the outer product with :math:`r_i` yields the equation for the rotational motion.
-
-:math:`a_i` comes from the fluid-particle interactions (derivation can be found in e.g., |BREUGEM2012|).
-There are several ways to formulate :math:`a_i`, and one of the most successful ways is the direct forcing on Lagrange points defined on each particle surface (|UHLMANN2005|).
-Here, on the other hand, we exchange the momentum between particles and fluid directly on the Eulerian field (e.g., |KAJISHIMA2002|):
+   F_i,
 
 .. math::
 
-   a_i
-   \equiv
-   w
-   \frac{
-      U_i + \epsilon_{ijk} \Omega_j r_k
-      -
-      u_i
-   }{\Delta t},
-
-so that the no-slip / no-penetration conditions are imposed on the particle surface, where :math:`w` is an appropriate weight.
-In this project, we use
-
-.. math::
-
-   f^{\prime} \left( x \right)
+   \oder{}{t} \left( I_m \Omega_i \right)
    =
-   \frac{1}{2} \beta \left\{ 1 - \tanh^2 \left( \beta x \right) \right\}
+   \int_{\partial V_p} \epsilon_{ijk} r_j a_k d S_p
+   +
+   \oder{}{t} \int_{V_p} \epsilon_{ijk} r_j u_k d V_p
+   +
+   T_i.
 
-as an approximation of Dirac delta, where :math:`x` is the signed distance from the particle surface normalised by the reference grid size :math:`\Delta \equiv \Delta x \equiv \Delta y`.
-One of the indefinite integral of :math:`f^{\prime} \left( x \right)` is
+The first equation describes the translational velocity :math:`U_i` of the gravity center :math:`X_i`, while the second equation tells how the angular velocity :math:`\Omega_i` is evolved in time.
+The first terms in the right-hand-sides (including :math:`a_i`) denote the force and torque caused by the fluid-structure interactions, while the second terms are responsible for the motion of fictitious fluid inside objects (see |BREUGEM2012|).
+The last terms :math:`F_i` and :math:`T_i` are the external force and torque, which take into account the gravitational acceleration and collisions between the other objects in this project.
+
+Since I am interested in ellipses, it is worthwhile to introduce these basic parameters and their relations:
 
 .. math::
 
-   f \left( x \right)
-   =
-   \frac{1}{2} \left\{ 1 + \tanh \left( \beta x \right) \right\},
+   \begin{cases}
+      \text{major axis} & a, \\
+      \text{minor axis} & b, \\
+      \text{volume} \, V_p & \pi a b, \\
+      \text{mass} \, m_p & \rho_p \pi a b, \\
+      \text{moment of inertia} \, I_m & \frac{1}{4} \pi \left( a^2 + b^2 \right)
+   \end{cases}
 
-which is used in the THINC method (one type of the volume-of-fluid methods, see e.g., |XIAO2005|) as an phase indicator.
+.. note::
 
-.. image:: data/indicator.pdf
-   :width: 600
+   Since I limit my focus to two-dimensional objects for now, the volume and surface integrals lead surface and line integrals, respectively.
+   Also the moment of inertia inside the temporal derivative can be taken out, i.e., the left-hand-side of the equation of angular velocity leads
 
-:math:`\beta` controls the sharpness of the surface, the larger :math:`\beta` is, the sharper the surface is, and :math:`\beta \rightarrow \infty` in theory.
-For the time being, :math:`\beta` is fixed to :math:`2` so that :math:`f^{\prime} \left( d = 0 \right) = 1`, whose effects should be further investigated.
+   .. math::
+
+      \oder{}{t} \left( I_m \Omega_i \right)
+      =
+      I_m \oder{\Omega_i}{t}.
 
 *********
 Collision
@@ -138,4 +131,6 @@ The above spring model does not include a dumper, indicating that the collision 
 Obviously this is not true in most cases and also elastic, dumping, and sliding motions in the tangential direction should be included (see |COSTA2015| for extensive analyses).
 
 In this project, however, I neglect all these aspects just for simplicity, and include only springs in the normal directions to obtain *plausible* results.
+
+An extension of the above concept to elliptic objects is not straightforward, which will be discussed later.
 

@@ -14,6 +14,7 @@ Documentation
 
    introduction
    governing_equations/main
+   numerical_method/main
    implementation/main
    examples/index
    references

@@ -31,7 +31,7 @@ array titles[4] = [ \
   '$16$', \
   '$32$', \
   '$48$', \
-  'reference', \
+  'ref.', \
 ]
 
 set style line 5 lc rgb '#AAAAAA' lw 3
