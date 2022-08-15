@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <mpi.h>
 #include "param.h"
 #include "parallel.h"
@@ -10,7 +11,6 @@
 
 
 static int integrate(const param_t *param, const parallel_t *parallel, fluid_t *fluid, suspensions_t *suspensions){
-  const int substepmax = 4;
   for(int rkstep = 0; rkstep < RKSTEPMAX; rkstep++){
     suspensions_reset_particle_increments(suspensions);
     /* ! update boundary and halo values ! 3 ! */
@@ -33,11 +33,20 @@ static int integrate(const param_t *param, const parallel_t *parallel, fluid_t *
     fluid_update_pressure(param, parallel, fluid);
     /*** update particles iteratively ***/
     suspensions_compute_collision_force(param, parallel, 0, suspensions);
-    for(int substep = 0; substep < substepmax; substep++){
+    for(int substep = 0; ; substep++){
       // \int_{Vp^{k+1}} u_i^{k+1} d{Vp^{k+1}}
       suspensions_compute_inertia(param, parallel, 1, fluid, suspensions);
       suspensions_compute_collision_force(param, parallel, 1, suspensions);
-      suspensions_increment_particles(param, rkstep, suspensions);
+      const double residual_max = 1.e-8;
+      double residual;
+      suspensions_increment_particles(param, rkstep, suspensions, &residual);
+      if(residual < residual_max){
+        break;
+      }
+      const int substep_max = 100;
+      if(substep > substep_max){
+        break;
+      }
     }
     // U_i^{k} -> U_i^{k+1}
     suspensions_update_particles(param, suspensions);

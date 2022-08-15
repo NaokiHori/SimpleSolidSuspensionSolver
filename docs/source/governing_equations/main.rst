@@ -35,6 +35,8 @@ which govern the behaviour of the liquid, we consider the Newton-Euler equations
    +
    \oder{}{t} \int_{V_p} u_i d V_p
    +
+   \left( 1 - \rho_p \right) \frac{1}{Fr^2}
+   +
    F_i,
 
 .. math::
@@ -47,11 +49,19 @@ which govern the behaviour of the liquid, we consider the Newton-Euler equations
    +
    T_i.
 
+Note that they are already normalised by the reference scales, and :math:`Fr` is the Froude number defined as
+
+.. math::
+
+   Fr
+   \equiv
+   \frac{U}{\sqrt{gL}}.
+
 The first equation describes the translational velocity :math:`U_i` of the gravity center :math:`X_i`, while the second equation tells how the angular velocity :math:`\Omega_i` is evolved in time.
 The first terms in the right-hand-sides (including :math:`a_i`) denote the force and torque caused by the fluid-structure interactions, while the second terms are responsible for the motion of fictitious fluid inside objects (see |BREUGEM2012|).
 The last terms :math:`F_i` and :math:`T_i` are the external force and torque, which take into account the gravitational acceleration and collisions between the other objects in this project.
 
-Since I am interested in ellipses, it is worthwhile to introduce these basic parameters and their relations:
+Since I am interested in ellipses, it is worthwhile to introduce the following basic parameters and their relations:
 
 .. math::
 
@@ -65,8 +75,8 @@ Since I am interested in ellipses, it is worthwhile to introduce these basic par
 
 .. note::
 
-   Since I limit my focus to two-dimensional objects for now, the volume and surface integrals lead surface and line integrals, respectively.
-   Also the moment of inertia inside the temporal derivative can be taken out, i.e., the left-hand-side of the equation of angular velocity leads
+   Since I limit my focus to two-dimensional objects for now, the volume and surface integrals reduce to the surface and line integrals, respectively.
+   Also the moment of inertia inside the temporal derivative is a constant for each object and thus can be taken out, i.e., the left-hand-side of the equation of angular velocity leads
 
    .. math::
 

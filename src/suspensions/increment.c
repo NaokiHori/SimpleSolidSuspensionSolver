@@ -1,4 +1,5 @@
 #include <math.h>
+#include <float.h>
 #include "common.h"
 #include "param.h"
 #include "parallel.h"
@@ -6,7 +7,7 @@
 #include "suspensions.h"
 
 
-static int increment_particle_velocities(const param_t *param, const int rkstep, suspensions_t *suspensions){
+static int increment_particle_velocities(const param_t *param, const int rkstep, suspensions_t *suspensions, double *residual){
   const double Fr = param->Fr;
   const double dt = param->dt;
   const double gamma = param->rkcoefs[rkstep].gamma;
@@ -14,6 +15,11 @@ static int increment_particle_velocities(const param_t *param, const int rkstep,
   for(int n = 0; n < n_particles; n++){
     particle_t *p = suspensions->particles[n];
     const double den = p->den;
+    // store previous increments
+    double dux_prev = p->dux;
+    double duy_prev = p->duy;
+    double dvz_prev = p->dvz;
+    // compute new increments
     p->dux =
       +0.5*gamma*dt*(p->cfx[0]+p->cfx[1]) // collision
       +          dt* p->fux               // boundary force
@@ -28,8 +34,12 @@ static int increment_particle_velocities(const param_t *param, const int rkstep,
     p->dvz =
       +0.5*gamma*dt*(p->ctz[0]+p->ctz[1]) // collision
       +          dt* p->tvz               // boundary torque
-      +(p->ivz[1]-p->ivz[0])
+      +(p->ivz[1]-p->ivz[0])              // internal inertia
       ;
+    // check convergence
+    *residual = fmax(*residual, fabs(p->dux-dux_prev));
+    *residual = fmax(*residual, fabs(p->duy-duy_prev));
+    *residual = fmax(*residual, fabs(p->dvz-dvz_prev));
   }
   return 0;
 }
@@ -53,9 +63,11 @@ static int increment_particle_positions(const param_t *param, const int rkstep, 
   return 0;
 }
 
-int suspensions_increment_particles(const param_t *param, const int rkstep, suspensions_t *suspensions){
-  increment_particle_velocities(param, rkstep, suspensions);
+int suspensions_increment_particles(const param_t *param, const int rkstep, suspensions_t *suspensions, double *residual){
+  *residual = 0.;
+  increment_particle_velocities(param, rkstep, suspensions, residual);
   increment_particle_positions(param, rkstep, suspensions);
+  MPI_Allreduce(MPI_IN_PLACE, residual, 1, MPI_DOUBLE, MPI_MAX, MPI_COMM_WORLD);
   return 0;
 }
 

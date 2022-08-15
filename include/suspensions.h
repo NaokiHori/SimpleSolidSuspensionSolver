@@ -1,6 +1,7 @@
 #if !defined(SUSPENSIONS_H)
 #define SUSPENSIONS_H
 
+#include <stdbool.h>
 #include "structure.h"
 #include "arrays/suspensions.h"
 
@@ -45,7 +46,7 @@ extern int suspensions_reset_particle_increments(suspensions_t *suspensions);
 extern int suspensions_compute_inertia(const param_t *param, const parallel_t *parallel, const int cnstep, const fluid_t *fluid, suspensions_t *suspensions);
 extern int suspensions_compute_collision_force(const param_t *param, const parallel_t *parallel, const int cnstep, suspensions_t *suspensions);
 extern int suspensions_exchange_momentum(const param_t *param, const parallel_t *parallel, const fluid_t *fluid, suspensions_t *suspensions);
-extern int suspensions_increment_particles(const param_t *param, const int rkstep, suspensions_t *suspensions);
+extern int suspensions_increment_particles(const param_t *param, const int rkstep, suspensions_t *suspensions, double *residual);
 extern int suspensions_update_momentum_fleid(const param_t *param, const parallel_t *parallel, fluid_t *fluid, const suspensions_t *suspensions);
 extern int suspensions_update_particles(const param_t *param, suspensions_t *suspensions);
 
