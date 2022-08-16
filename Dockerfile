@@ -1,6 +1,6 @@
 FROM ubuntu:latest
-RUN apt-get -y update
-RUN apt-get -y install make libopenmpi-dev libfftw3-dev
+RUN apt-get -y update && \
+    apt-get -y install make libopenmpi-dev libfftw3-dev
 
 ARG RUNNER=runner
 RUN adduser --disabled-password ${RUNNER}
