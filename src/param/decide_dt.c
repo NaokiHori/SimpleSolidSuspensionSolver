@@ -5,14 +5,17 @@
 #include "param.h"
 #include "parallel.h"
 #include "fluid.h"
+#include "suspensions.h"
 
 
-int param_decide_dt(param_t *param, const parallel_t *parallel, const fluid_t *fluid){
+int param_decide_dt(param_t *param, const parallel_t *parallel, const fluid_t *fluid, const suspensions_t *suspensions){
   const int mpisize = parallel->mpisize;
   const int mpirank = parallel->mpirank;
   const int itot = param->itot;
   const int jtot = param->jtot;
   const int jsize = parallel_get_size(jtot, mpisize, mpirank);
+  // sufficiently small number
+  const double small = 1.e-8;
   const double Re = param->Re;
   const double lx = param->lx;
   const double *dxc = param->dxc;
@@ -22,8 +25,6 @@ int param_decide_dt(param_t *param, const parallel_t *parallel, const fluid_t *f
   /* ! advective constraint, which will be used as dt ! 25 ! */
   double dt_adv;
   {
-    // sufficiently small number
-    const double small = 1.e-8;
     // grid-size/velocity
     dt_adv = 5.e-2; // max dt_adv
     // ux
@@ -59,8 +60,22 @@ int param_decide_dt(param_t *param, const parallel_t *parallel, const fluid_t *f
     dt_dif_x *= param->safefactors[1];
     dt_dif_y *= param->safefactors[1];
   }
+  // particle motions
+  double dt_par;
+  {
+    const int n_particles = suspensions->n_particles;
+    const double delta = fmin(param->dx, param->dy);
+    dt_par = DBL_MAX;
+    for(int n = 0; n < n_particles; n++){
+      particle_t *p = suspensions->particles[n];
+      double pux = fmax(fabs(p->ux)+fabs(fmax(p->a, p->b)*p->vz), small);
+      double puy = fmax(fabs(p->uy)+fabs(fmax(p->a, p->b)*p->vz), small);
+      double val = fmax(pux, puy);
+      dt_par = fmin(dt_par, delta/val);
+    }
+  }
   /* ! time step size is assigned ! 1 ! */
-  param->dt = fmin(dt_adv, fmin(dt_dif_x, dt_dif_y));
+  param->dt = fmin(fmin(dt_adv, fmin(dt_dif_x, dt_dif_y)), dt_par);
   return 0;
 }
 

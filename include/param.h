@@ -55,6 +55,6 @@ struct param_t_ {
 extern param_t *param_init(void);
 extern int param_finalise(param_t *param);
 
-extern int param_decide_dt(param_t *param, const parallel_t *parallel, const fluid_t *fluid);
+extern int param_decide_dt(param_t *param, const parallel_t *parallel, const fluid_t *fluid, const suspensions_t *suspensions);
 
 #endif // PARAM_H

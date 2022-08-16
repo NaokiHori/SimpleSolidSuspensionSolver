@@ -68,7 +68,7 @@ int main(void){
   /* main loop */
   for(;;){
     /* ! decide time step size ! 1 ! */
-    param_decide_dt(param, parallel, fluid);
+    param_decide_dt(param, parallel, fluid, suspensions);
     /* ! integrate mass, momentum, and motions of suspensions in time ! 1 ! */
     integrate(param, parallel, fluid, suspensions);
     /* ! step and time are incremented ! 2 ! */
