@@ -38,6 +38,14 @@ Results
 .. literalinclude:: data/96/ci.txt
    :language: text
 
+The final flow field is shown below.
+Note that the picture is transposed, i.e., in the picture, :math:`x` and :math:`y` directions in the simulation are shown as the vertical and horizontal directions, respectively.
+
+.. image:: data/96/snapshot.png
+   :width: 400
+
+The colour denotes the size of the stream-wise velocity, while the center gray object is the immersed particle.
+
 Lateral (wall-normal, :math:`x` direction) migration of a particle as a function of the traveling distance in the stream-wise (:math:`y`) direction is shown below.
 
 .. image:: data/result.pdf

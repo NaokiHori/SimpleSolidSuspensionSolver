@@ -74,3 +74,17 @@ Quick start
 
       $ mpirun -n 2 ./a.out
 
+********
+Examples
+********
+
+Several examples can be found in the documentation.
+
+#. `Migration of a circular object in a shear flow <https://naokihori.github.io/SimpleSuspensionSolver/examples/case1/main.html>`_
+
+#. `Segré-Silberberg effect <https://naokihori.github.io/SimpleSuspensionSolver/examples/case2/main.html>`_
+
+#. `Rotation of an ellise in a shear flow <https://naokihori.github.io/SimpleSuspensionSolver/examples/case3/main.html>`_
+
+#. `Suspension in a plane Poiseuille flow <https://naokihori.github.io/SimpleSuspensionSolver/examples/case4/main.html>`_
+

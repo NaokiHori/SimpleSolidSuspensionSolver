@@ -3,9 +3,9 @@
 
 .. include:: /references.txt
 
-#########################
-Migration in a shear flow
-#########################
+#######################################
+Migration of a cylinder in a shear flow
+#######################################
 
 Comparison with the reference data by |FENG1994| is described, who simulated the lateral migration of a neutrally-buoyant circular object in a two-dimensional wall-bounded shear flow.
 
@@ -40,6 +40,14 @@ Results
 
 .. literalinclude:: data/48/ci.txt
    :language: text
+
+The final flow field is shown below.
+Note that the picture is transposed, i.e., in the picture, :math:`x` and :math:`y` directions in the simulation are shown as the vertical and horizontal directions, respectively.
+
+.. image:: data/48/snapshot.png
+   :width: 400
+
+The colour denotes the size of the stream-wise velocity, while the center gray object is the immersed particle.
 
 Lateral (wall-normal, :math:`x` direction) migration of a particle as a function of the simulation time :math:`t` is shown below.
 

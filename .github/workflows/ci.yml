@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dev
     paths:
       - docs/**
       - .github/workflows/documentation.yml
@@ -24,7 +25,7 @@ jobs:
       - name: Install python and libs for pre-processing
         run: |
           python -m pip install --upgrade pip
-          pip install numpy
+          pip install numpy matplotlib
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
@@ -46,12 +47,18 @@ jobs:
       - name: Run case
         run: |
           sh docs/source/examples/case1/config/exec${{ matrix.resolution }}.sh
-      - name: Save results under artifacts directory
+      - name: Post-process results and save under artifacts directory
         run: |
           mkdir artifacts
+          python3 \
+            docs/source/examples/case1/data/visualise.py \
+            output/save
           cp \
             output/log/particle0000000000.dat \
             artifacts/particle.dat
+          cp \
+            snapshot.png \
+            artifacts/snapshot.png
       - name: Write metadata used in ci.rst
         run: |
           echo "OS   :" $(cat /etc/os-release | grep PRETTY_NAME | awk -F "=" '{print $2}') >> artifacts/ci.txt
@@ -76,7 +83,7 @@ jobs:
       - name: Install python and libs for pre- and post-processings
         run: |
           python -m pip install --upgrade pip
-          pip install numpy
+          pip install numpy matplotlib
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
@@ -98,9 +105,15 @@ jobs:
         run: |
           mkdir artifacts
           python3 \
+            docs/source/examples/case2/data/visualise.py \
+            output/save
+          python3 \
             docs/source/examples/case2/data/convert.py \
             output/log/particle0000000000.dat \
             artifacts/particle.dat
+          cp \
+            snapshot.png \
+            artifacts/snapshot.png
       - name: Write metadata used in ci.rst
         run: |
           echo "OS   :" $(cat /etc/os-release | grep PRETTY_NAME | awk -F "=" '{print $2}') >> artifacts/ci.txt
@@ -125,7 +138,7 @@ jobs:
       - name: Install python and libs for pre-processing
         run: |
           python -m pip install --upgrade pip
-          pip install numpy
+          pip install numpy matplotlib
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
@@ -147,12 +160,18 @@ jobs:
       - name: Run case
         run: |
           sh docs/source/examples/case3/config/exec${{ matrix.resolution }}.sh
-      - name: Save results under artifacts directory
+      - name: Post-process results and save under artifacts directory
         run: |
           mkdir artifacts
+          python3 \
+            docs/source/examples/case3/data/visualise.py \
+            output/save
           cp \
             output/log/particle0000000000.dat \
             artifacts/particle.dat
+          cp \
+            snapshot.png \
+            artifacts/snapshot.png
       - name: Write metadata used in ci.rst
         run: |
           echo "OS   :" $(cat /etc/os-release | grep PRETTY_NAME | awk -F "=" '{print $2}') >> artifacts/ci.txt
