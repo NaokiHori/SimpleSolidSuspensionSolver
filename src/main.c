@@ -86,7 +86,7 @@ int main(void){
     }
     /* ! collect statistics ! 4 ! */
     if(param->stat.next < param->time){
-      statistics_collect(param, parallel, fluid, statistics);
+      statistics_collect(param, parallel, fluid, suspensions, statistics);
       param->stat.next += param->stat.rate;
     }
     /* ! terminate when the simulation is finished ! 3 ! */

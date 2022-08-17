@@ -141,5 +141,6 @@ if __name__ == "__main__":
         generate_grid_2d(f, "ux2",   "double", 1, "itot+1",  0, "jsize+2")
         generate_grid_2d(f, "uy1",   "double", 0, "itot+2",  0, "jsize+2")
         generate_grid_2d(f, "uy2",   "double", 0, "itot+2",  0, "jsize+2")
+        generate_grid_2d(f, "phi",   "double", 0, "itot+2",  0, "jsize+2")
         attach_footer(f, "statistics")
 

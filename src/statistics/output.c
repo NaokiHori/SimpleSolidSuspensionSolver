@@ -1,5 +1,4 @@
 #include <string.h>
-#include <unistd.h>
 #include "common.h"
 #include "param.h"
 #include "parallel.h"
@@ -44,6 +43,11 @@ static int save_fluid(const char dirname[], const param_t *param, const parallel
   return 0;
 }
 
+static int save_suspensions(const char dirname[], const param_t *param, const parallel_t *parallel, const statistics_t *statistics){
+  fileio_w_p_like_parallel(dirname, "phi", param, parallel, statistics->phi);
+  return 0;
+}
+
 static char *generate_dirname(const int step){
   const char prefix[] = {FILEIO_STAT "/step"};
   const int nzeros = 10;
@@ -66,6 +70,7 @@ int statistics_output(const param_t *param, const parallel_t *parallel, const st
   }
   /* ! save 2d statistics ! 1 ! */
   save_fluid(dirname, param, parallel, statistics);
+  save_suspensions(dirname, param, parallel, statistics);
   common_free(dirname);
   return 0;
 }

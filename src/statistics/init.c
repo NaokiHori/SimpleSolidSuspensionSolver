@@ -14,10 +14,11 @@ static int allocate(const param_t *param, const parallel_t *parallel, statistics
   /* ! structure is allocated ! 1 ! */
   *statistics = common_calloc(1, sizeof(statistics_t));
   /* ! arrays are allocated ! 6 ! */
-  (*statistics)->ux1 = common_calloc(1,   UX1_MEMSIZE);
-  (*statistics)->ux2 = common_calloc(1,   UX2_MEMSIZE);
-  (*statistics)->uy1 = common_calloc(1,   UY1_MEMSIZE);
-  (*statistics)->uy2 = common_calloc(1,   UY2_MEMSIZE);
+  (*statistics)->ux1 = common_calloc(1, UX1_MEMSIZE);
+  (*statistics)->ux2 = common_calloc(1, UX2_MEMSIZE);
+  (*statistics)->uy1 = common_calloc(1, UY1_MEMSIZE);
+  (*statistics)->uy2 = common_calloc(1, UY2_MEMSIZE);
+  (*statistics)->phi = common_calloc(1, PHI_MEMSIZE);
   return 0;
 }
 
@@ -29,10 +30,11 @@ static int init(const param_t *param, const parallel_t *parallel, statistics_t *
   const int jsize = parallel_get_size(jtot, mpisize, mpirank);
   /* ! assign 0 ! 7 ! */
   // just in case, 0 is already assigned when allocated since we call calloc inside
-  memset(statistics->ux1,   0, UX1_MEMSIZE);
-  memset(statistics->ux2,   0, UX2_MEMSIZE);
-  memset(statistics->uy1,   0, UY1_MEMSIZE);
-  memset(statistics->uy2,   0, UY2_MEMSIZE);
+  memset(statistics->ux1, 0, UX1_MEMSIZE);
+  memset(statistics->ux2, 0, UX2_MEMSIZE);
+  memset(statistics->uy1, 0, UY1_MEMSIZE);
+  memset(statistics->uy2, 0, UY2_MEMSIZE);
+  memset(statistics->phi, 0, PHI_MEMSIZE);
   return 0;
 }
 

@@ -42,4 +42,14 @@
 #define UY2_MEMSIZE (sizeof(double)*(UY2_LEN_I)*(UY2_LEN_J))
 #define UY2(I, J) (uy2[(J)*(itot+2)+(I)])
 
+/* phi (double, 2D) [0:itot+1] x [0:jsize+1] */
+#define PHI_MIN_I (0)
+#define PHI_MAX_I (itot+1)
+#define PHI_LEN_I (PHI_MAX_I-PHI_MIN_I+1)
+#define PHI_MIN_J (0)
+#define PHI_MAX_J (jsize+1)
+#define PHI_LEN_J (PHI_MAX_J-PHI_MIN_J+1)
+#define PHI_MEMSIZE (sizeof(double)*(PHI_LEN_I)*(PHI_LEN_J))
+#define PHI(I, J) (phi[(J)*(itot+2)+(I)])
+
 #endif // ARRAYS_STATISTICS_H
