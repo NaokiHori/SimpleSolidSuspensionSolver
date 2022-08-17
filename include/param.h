@@ -45,7 +45,7 @@ struct param_t_ {
   // temporal integration
   rkcoef_t rkcoefs[3];
   double time, dt;
-  double safefactors[2];
+  double safefactors[3];
   int step;
   // when to stop, when to write log, etc.
   double timemax, wtimemax;

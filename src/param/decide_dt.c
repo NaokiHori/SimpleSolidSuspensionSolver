@@ -73,6 +73,7 @@ int param_decide_dt(param_t *param, const parallel_t *parallel, const fluid_t *f
       double val = fmax(pux, puy);
       dt_par = fmin(dt_par, delta/val);
     }
+    dt_par *= param->safefactors[2];
   }
   /* ! time step size is assigned ! 1 ! */
   param->dt = fmin(fmin(dt_adv, fmin(dt_dif_x, dt_dif_y)), dt_par);

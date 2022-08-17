@@ -92,6 +92,7 @@ static int load_config(param_t *param){
   param->ly      = load_double("ly", 1.0e+0);
   param->safefactors[0] = load_double("safefactor_adv", 7.5e-1);
   param->safefactors[1] = load_double("safefactor_dif", 7.5e-1);
+  param->safefactors[2] = load_double("safefactor_par", 9.5e-1);
   /* ! non-dimensional parameters ! 2 ! */
   param->Re      = load_double("Re", 2.334e+3);
   param->Fr      = load_double("Fr", DBL_MAX);
