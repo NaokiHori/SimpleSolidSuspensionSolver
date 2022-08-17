@@ -12,3 +12,4 @@ References
 * |TSUJI1993|
 * |FENG1994|
 * |XIAO2005|
+* |CHEN2012|
