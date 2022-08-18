@@ -17,7 +17,7 @@ import sys
 
 # -- Project information -----------------------------------------------------
 
-project = "Simple Suspension Solver"
+project = "Simple Solid Suspension Solver"
 copyright = "2022, Naoki Hori"
 author = "Naoki Hori"
 
@@ -55,7 +55,7 @@ html_theme = "alabaster"
 html_theme_options = {
     "fixed_sidebar": "true",
     "github_user": "NaokiHori",
-    "github_repo": "SimpleSuspensionSolver",
+    "github_repo": "SimpleSolidSuspensionSolver",
     "github_type": "true",
 }
 

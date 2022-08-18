@@ -1,19 +1,19 @@
-########################
-Simple Suspension Solver
-########################
+##############################
+Simple Solid Suspension Solver
+##############################
 
 |License|_ |CI|_ |LastCommit|_
 
-.. |License| image:: https://img.shields.io/github/license/NaokiHori/SimpleSuspensionSolver
+.. |License| image:: https://img.shields.io/github/license/NaokiHori/SimpleSolidSuspensionSolver
 .. _License: https://opensource.org/licenses/MIT
 
-.. |CI| image:: https://github.com/NaokiHori/SimpleSuspensionSolver/actions/workflows/ci.yml/badge.svg
-.. _CI: https://github.com/NaokiHori/SimpleSuspensionSolver/actions/workflows/ci.yml
+.. |CI| image:: https://github.com/NaokiHori/SimpleSolidSuspensionSolver/actions/workflows/ci.yml/badge.svg
+.. _CI: https://github.com/NaokiHori/SimpleSolidSuspensionSolver/actions/workflows/ci.yml
 
-.. |LastCommit| image:: https://img.shields.io/github/last-commit/NaokiHori/SimpleSuspensionSolver/main
-.. _LastCommit: https://github.com/NaokiHori/SimpleSuspensionSolver/commits/main
+.. |LastCommit| image:: https://img.shields.io/github/last-commit/NaokiHori/SimpleSolidSuspensionSolver/main
+.. _LastCommit: https://github.com/NaokiHori/SimpleSolidSuspensionSolver/commits/main
 
-.. image:: https://github.com/NaokiHori/SimpleSuspensionSolver/blob/main/docs/source/snapshot.png
+.. image:: https://github.com/NaokiHori/SimpleSolidSuspensionSolver/blob/main/docs/source/snapshot.png
    :width: 800
    :target: https://youtu.be/iuO5CxvAlio
 
@@ -23,7 +23,7 @@ Overview
 
 This library numerically solves the motion of rigid bodies (ellipses) governed by the Newton-Euler equations suspended in viscous liquid by means of the finite-difference and the immersed boundary methods.
 
-Please refer to `Simple Navier-Stokes Solver <https://github.com/NaokiHori/SimpleNavierStokesSolver>`_ and `the documentation of this library <https://naokihori.github.io/SimpleSuspensionSolver/index.html>`_ for details.
+Please refer to `Simple Navier-Stokes Solver <https://github.com/NaokiHori/SimpleNavierStokesSolver>`_ and `the documentation of this library <https://naokihori.github.io/SimpleSolidSuspensionSolver/index.html>`_ for details.
 
 This library is still under development, and especially the documentation is far from being sufficient.
 
@@ -56,8 +56,8 @@ Quick start
 
    .. code-block:: console
 
-      $ git clone https://github.com/NaokiHori/SimpleSuspensionSolver
-      $ cd SimpleSuspensionSolver
+      $ git clone https://github.com/NaokiHori/SimpleSolidSuspensionSolver
+      $ cd SimpleSolidSuspensionSolver
 
 #. Build
 
@@ -80,11 +80,11 @@ Examples
 
 Several examples can be found in the documentation.
 
-#. `Migration of a circular object in a shear flow <https://naokihori.github.io/SimpleSuspensionSolver/examples/case1/main.html>`_
+#. `Migration of a circular object in a shear flow <https://naokihori.github.io/SimpleSolidSuspensionSolver/examples/case1/main.html>`_
 
-#. `Segré-Silberberg effect <https://naokihori.github.io/SimpleSuspensionSolver/examples/case2/main.html>`_
+#. `Segré-Silberberg effect <https://naokihori.github.io/SimpleSolidSuspensionSolver/examples/case2/main.html>`_
 
-#. `Rotation of an ellise in a shear flow <https://naokihori.github.io/SimpleSuspensionSolver/examples/case3/main.html>`_
+#. `Rotation of an ellipse in a shear flow <https://naokihori.github.io/SimpleSolidSuspensionSolver/examples/case3/main.html>`_
 
-#. `Suspension in a plane Poiseuille flow <https://naokihori.github.io/SimpleSuspensionSolver/examples/case4/main.html>`_
+#. `Suspension in a plane Poiseuille flow <https://naokihori.github.io/SimpleSolidSuspensionSolver/examples/case4/main.html>`_
 

@@ -29,7 +29,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
-          repository: 'NaokiHori/SimpleSuspensionSolver'
+          repository: 'NaokiHori/SimpleSolidSuspensionSolver'
           ref: 'main'
       - name: Initialise particles (data will be stored under initparticles directory)
         run: |
@@ -87,7 +87,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
-          repository: 'NaokiHori/SimpleSuspensionSolver'
+          repository: 'NaokiHori/SimpleSolidSuspensionSolver'
           ref: 'main'
       - name: Initialise particles (data will be stored under initparticles directory)
         run: |
@@ -142,7 +142,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
-          repository: 'NaokiHori/SimpleSuspensionSolver'
+          repository: 'NaokiHori/SimpleSolidSuspensionSolver'
           ref: 'main'
       - name: Initialise particles (data will be stored under initparticles directory)
         run: |
@@ -193,7 +193,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
-          repository: 'NaokiHori/SimpleSuspensionSolver'
+          repository: 'NaokiHori/SimpleSolidSuspensionSolver'
           ref: 'main'
       - name: Download LateralMigration16
         uses: actions/download-artifact@v3
