@@ -182,9 +182,19 @@ jobs:
           name: RotatingEllipse${{ matrix.resolution }}
           path: artifacts
 
-  build-doc:
-    name: Build documentation using sphinx
+  build-and-deploy-doc:
+    name: Build and deploy documentation
     needs: [build-and-simulate-1, build-and-simulate-2, build-and-simulate-3]
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
@@ -281,40 +291,12 @@ jobs:
             --workdir /project \
             sphinxdoc/sphinx:5.0.1 \
             /bin/bash sphinx.sh
-      - name: Upload artifacts
-        # upload everything under docs/build/html/
-        uses: actions/upload-artifact@v3
-        with:
-          name: DocHTML
-          path: docs/build/html
-
-  deploy-doc:
-    needs: build-doc
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    concurrency:
-      group: "pages"
-      cancel-in-progress: true
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v1
-      - name: Download artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: DocHTML
-          path: docs/
-      - name: Upload artifact
+      - name: Upload HTML
         uses: actions/upload-pages-artifact@v1
         with:
-          path: docs/
+          path: docs/build/html
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main
