@@ -5,10 +5,9 @@ on:
   push:
     branches:
       - main
-      - dev
     paths:
       - docs/**
-      - .github/workflows/documentation.yml
+      - .github/workflows/ci.yml
 
 jobs:
 
@@ -189,7 +188,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
-        run: sudo apt-get -y install gnuplot
+        run: |
+          sudo apt-get -y install gnuplot ghostscript imagemagick
+      - name: Edit ghostscript config
+        run: |
+          sudo sed -i 's/rights="none"/rights="read|write"/g' /etc/ImageMagick-6/policy.xml
       - name: Checkout repository
         uses: actions/checkout@v1
         with:
@@ -265,6 +268,10 @@ jobs:
             --workdir /project \
             naokihori/texlive:gnuplot-epslatex \
             /bin/sh pdflatex.sh
+      - name: Convert pdf to png
+        run: |
+          cd docs
+          sh create_figures/pdf-to-png.sh
       - name: Build documentation using Sphinx
         run: |
           echo "cd docs && make html" > sphinx.sh

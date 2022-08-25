@@ -36,6 +36,6 @@ The averaged volume fraction :math:`\left\langle \phi \right\rangle_{y,t}` as a 
 The dashed line indicates the total volume fraction (:math:`16.9\%`), i.e., the integral of the result should give this value.
 A qualitative agreement with the reference result is observed.
 
-.. image:: data/vfrac.pdf
+.. image:: data/vfrac.png
    :width: 800
 

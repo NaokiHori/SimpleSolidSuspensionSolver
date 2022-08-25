@@ -44,7 +44,7 @@ One of the indefinite integrals of :math:`f^{\prime} \left( x \right)` is
 
 which is used in the THINC method (one type of the volume-of-fluid methods, see e.g., |XIAO2005|) as an phase indicator.
 
-.. image:: data/indicator.pdf
+.. image:: data/indicator.png
    :width: 600
 
 :math:`\beta` controls the sharpness of the surface, and the larger :math:`\beta` is, the sharper the surface is.

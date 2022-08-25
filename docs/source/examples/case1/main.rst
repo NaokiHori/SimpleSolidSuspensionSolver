@@ -51,6 +51,6 @@ The colour denotes the size of the stream-wise velocity, while the center gray o
 
 Lateral (wall-normal, :math:`x` direction) migration of a particle as a function of the simulation time :math:`t` is shown below.
 
-.. image:: data/result.pdf
+.. image:: data/result.png
    :width: 800
 

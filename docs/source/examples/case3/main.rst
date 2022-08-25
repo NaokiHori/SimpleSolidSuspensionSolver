@@ -50,6 +50,6 @@ The colour denotes the size of the stream-wise velocity, while the center gray o
 Angular velocity of the particle :math:`\omega_z` as a function of time is shown below.
 Note that, although the reference data is obtained with :math:`160` grid points (:math:`320` lattice nodes) in the wall-normal direction, we limit the resolutions to lower values to reduce the computational cost.
 
-.. image:: data/result.pdf
+.. image:: data/result.png
    :width: 800
 
