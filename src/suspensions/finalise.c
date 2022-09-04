@@ -12,6 +12,8 @@ int suspensions_finalise(suspensions_t *suspensions){
   // Euler variables
   common_free(suspensions->dux);
   common_free(suspensions->duy);
+  // buffers to communicate Lagrange info
+  common_free(suspensions->buf);
   // main structure
   common_free(suspensions);
   return 0;

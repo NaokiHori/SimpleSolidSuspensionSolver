@@ -1,15 +1,27 @@
 #if !defined(FLUID_H)
 #define FLUID_H
 
+#include <fftw3.h>
 #include "structure.h"
 #include "arrays/fluid.h"
+#include "parallel.h"
+#include "tdm.h"
 
-/* ! definition of a structure fluid_t_ ! 6 !*/
+typedef struct {
+  double *qx, *qy;
+  fftw_plan fftw_plan_fwrd, fftw_plan_bwrd;
+  double *fftw_buf_r;
+  tdm_t *tdm_solver;
+  parallel_transpose_t *transposer_x_to_y, *transposer_y_to_x;
+} buffers_compute_potential_t;
+
+/* ! definition of a structure fluid_t_ ! 6 ! */
 struct fluid_t_ {
   double *ux, *uy;
   double *p, *psi;
   double *srcuxa, *srcuxb, *srcuxg;
   double *srcuya, *srcuyb, *srcuyg;
+  buffers_compute_potential_t *buffers_compute_potential;
 };
 
 extern fluid_t *fluid_init(const param_t *param, const parallel_t *parallel);

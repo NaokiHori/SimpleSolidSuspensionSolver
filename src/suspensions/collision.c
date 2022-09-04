@@ -345,25 +345,23 @@ int suspensions_compute_collision_force(const param_t *param, const parallel_t *
   // synchronise computed forcings
   {
     // prepare message buffer
-    double *buffer = common_calloc(3*n_particles, sizeof(double));
+    double *buf = suspensions->buf;
     // pack
     for(int n = 0; n < n_particles; n++){
       particle_t *p = particles[n];
-      buffer[3*n+0] = p->cfx[cnstep];
-      buffer[3*n+1] = p->cfy[cnstep];
-      buffer[3*n+2] = p->ctz[cnstep];
+      buf[3*n+0] = p->cfx[cnstep];
+      buf[3*n+1] = p->cfy[cnstep];
+      buf[3*n+2] = p->ctz[cnstep];
     }
     // sum up all
-    MPI_Allreduce(MPI_IN_PLACE, buffer, 3*n_particles, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+    MPI_Allreduce(MPI_IN_PLACE, buf, 3*n_particles, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
     // unpack
     for(int n = 0; n < n_particles; n++){
       particle_t *p = particles[n];
-      p->cfx[cnstep] = buffer[3*n+0];
-      p->cfy[cnstep] = buffer[3*n+1];
-      p->ctz[cnstep] = buffer[3*n+2];
+      p->cfx[cnstep] = buf[3*n+0];
+      p->cfy[cnstep] = buf[3*n+1];
+      p->ctz[cnstep] = buf[3*n+2];
     }
-    // clean-up buffer
-    common_free(buffer);
   }
   return 0;
 }

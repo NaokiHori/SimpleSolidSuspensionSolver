@@ -4,7 +4,6 @@
 #include "param.h"
 #include "parallel.h"
 #include "fluid.h"
-#include "linalg.h"
 
 
 static int compute_src_ux(const param_t *param, const parallel_t *parallel, fluid_t *fluid){

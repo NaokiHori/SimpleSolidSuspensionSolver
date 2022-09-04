@@ -25,6 +25,8 @@ static int allocate(const param_t *param, const parallel_t *parallel, fluid_t **
   (*fluid)->srcuya = common_calloc(1, SRCUYA_MEMSIZE);
   (*fluid)->srcuyb = common_calloc(1, SRCUYB_MEMSIZE);
   (*fluid)->srcuyg = common_calloc(1, SRCUYG_MEMSIZE);
+  /* buffers for fluid_compute_potential, which will be initialised later */
+  (*fluid)->buffers_compute_potential = NULL;
   return 0;
 }
 

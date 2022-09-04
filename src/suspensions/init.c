@@ -89,6 +89,8 @@ suspensions_t *suspensions_init(const param_t *param, const parallel_t *parallel
   suspensions_t *suspensions = NULL;
   allocate(param, parallel, &suspensions);
   init_or_load(param, suspensions);
+  // buffers to communicate Lagrange info
+  suspensions->buf = common_calloc(3*suspensions->n_particles, sizeof(double));
   return suspensions;
 }
 

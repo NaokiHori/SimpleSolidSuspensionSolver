@@ -35,6 +35,9 @@ struct suspensions_t_ {
   particle_t **particles;
   // responses of surface forces and torque on the momentum fields
   double *dux, *duy;
+  // buffers to communicate Lagrange information
+  // whose size is sizeof(double) * 3*n_particles
+  double *buf;
 };
 
 /* constructor and destructor */
