@@ -32,9 +32,9 @@ A snapshot of the flow field (velocity magnitude) and the instantaneous particle
 .. image:: data/snapshot.png
    :width: 800
 
-The averaged volume fraction :math:`\left\langle \phi \right\rangle_{y,t}` as a function of the wall-normal position is plotted as well as the reference by |CHEN2012|.
-The dashed line indicates the total volume fraction (:math:`16.9\%`), i.e., the integral of the result should give this value.
-A qualitative agreement with the reference result is observed.
+The averaged volume fraction :math:`\left\langle \phi \right\rangle_{y,t}` as a function of the wall-normal position is plotted as well as the reference by |CHEN2012|, which is computed in ``src/statistics/collect.c``.
+The dashed line indicates the total volume fraction (:math:`16.9\%`), i.e., the integral of the red line should give this value.
+A qualitative agreement (e.g., number of peaks, low concentration in the vicinity of the walls and the channel center) with the reference result is observed.
 
 .. image:: data/vfrac.png
    :width: 800
