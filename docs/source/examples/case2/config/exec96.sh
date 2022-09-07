@@ -39,4 +39,4 @@ export Re=2.334e+3
 ## external forcing in y direction
 export extfrcy=2.337e-4
 
-mpirun -n 1 --oversubscribe ./a.out
+mpirun -n 2 --oversubscribe ./a.out
