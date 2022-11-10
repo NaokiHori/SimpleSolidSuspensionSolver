@@ -2,6 +2,8 @@
 Simple Solid Suspension Solver
 ##############################
 
+For circular (2D) or spherical (3D) objects, please refer to `Simple IBM Solver <https://github.com/NaokiHori/SimpleIBMSolver>`_.
+
 |License|_ |CI|_ |LastCommit|_
 
 .. |License| image:: https://img.shields.io/github/license/NaokiHori/SimpleSolidSuspensionSolver
